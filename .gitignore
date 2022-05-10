@@ -1,0 +1,6 @@
+files/*.aux
+files/*.bbl
+files/*.blg
+files/*.log
+files/*.toc
+files/*.gz
