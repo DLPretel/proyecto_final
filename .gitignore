@@ -2,6 +2,8 @@ files/*.aux
 files/*.bbl
 files/*.blg
 files/*.log
+files/*.lof
+files/*.lot
 files/*.toc
 files/*.gz
 files/*.out

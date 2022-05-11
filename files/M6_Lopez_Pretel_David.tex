@@ -13,6 +13,8 @@
 	\maketitle
 	\newpage
 	\tableofcontents
+	\listoffigures
+	\listoftables
 	\newpage
 	
 	\begin{abstract}
@@ -37,7 +39,81 @@
 	
 	\subsection{Detección de anomalías}
 	
+	Una anomalía es una observación que no sigue el mismo patrón que el resto de los datos. La figura~\ref{fig:anomalias} muestra una representación gráfica de las anomalías en un conjunto de datos bidimensional. Los clusters C1 y C2 están compuestos por observaciones normales, ya que prácticamente todos los puntos pertenecen a estas dos regiones. El cluster C3 contiene muy pocas observaciones ya que es un cluster anómalo. Las observaciones O1, O2 están completamente aisladas y, por tanto, son instancias anómalas~\cite{chandola2009anomaly}.
 	
+	\begin{figure}[htb!]
+		\centering
+		\includegraphics[scale=0.13]{../figures/anomalies.png}
+		\caption{Ilustración de tipos de anomalías en un entorno de dos dimensiones}
+		\label{fig:anomalias}
+	\end{figure}
+	
+	Podemos encontrar tres tipos diferentes de instancias anómalas~\cite{goldstein2016comparative}:
+	
+	\begin{itemize}
+		\item Anomalía puntual: Es el escenario más frecuente en la detección de anomalías. Las instancias anómalas están completamente aisladas del resto. En la Figura~\ref{fig:anomalias}, O1 y O2 son anomalías puntuales.
+		
+		\item Anomalía colectiva: La anomalía es una mezcla de varias instancias anómalas. Por ejemplo, la detección de un robo de tarjeta de crédito puede implicar la detección de varios extractos de cuentas bancarias.
+		
+		\item Anomalía contextual: Una instancia que no es anómala puede serlo dentro de un contexto determinado. Por ejemplo, si medimos la temperatura de un motor en un rango de 50 a 120 grados. Una temperatura de 80 grados parece completamente normal, pero si ese valor se da cuando el motor no tiene carga de trabajo, la temperatura estimada debería ser menor.
+	\end{itemize}
+	
+	Las anomalías están relacionadas con el ruido, pero no hay que confundir ambos conceptos. El ruido tiene el mismo comportamiento descrito en la Figura~\ref{fig:anomalias}, pero, el ruido no tiene interés para el analista de datos mientras que las anomalías sí lo tienen. El ruido se produce por una alteración de los datos, por lo que no refleja la distribución original de los mismos. Además, el ruido perjudica la calidad de los datos y esas observaciones deben ser fijadas o eliminadas~\cite{LibroBigData, GARCIAGIL2019135, garciagilipf}. Las anomalías son información valiosa que debe ser detectada, extraída y analizada.
+
+	La detección de anomalías se utiliza en una gran variedad de dominios, como las redes de sensores~\cite{kraljevski2021machine}, la detección de intrusiones~\cite{kilincer2021machine}, las anomalías industriales~\cite{bayram2021real}, la detección de fraudes con tarjetas de crédito~\cite{forough2021ensemble}, la atención sanitaria~\cite{dwivedi2021novel}, y mucho más~\cite{goldstein2016comparative}. El gran número de dominios que involucran el problema de la detección de anomalías, y el creciente número de sensores en todos los campos está haciendo que la detección de anomalías gane en popularidad.
+
+	En cuanto a la salida de un algoritmo de detección de anomalías, puede ser de dos tipos diferentes~\cite{chandola2009anomaly}:
+	
+	\begin{itemize}
+		\item Etiquetas: El valor de retorno es una etiqueta binaria para cada instancia que indica qué instancias son normales y cuáles son anomalías.
+	
+		\item Scores: El valor de retorno es una puntuación de anomalía para cada instancia. Dicha puntuación indica la probabilidad de que una instancia sea anómala. También hay que estudiar qué puntuaciones son anómalas.
+	\end{itemize}
+	
+	Como se ha mencionado anteriormente, nos centramos en la detección de anomalías en las series temporales. Una serie temporal es una colección de datos que sigue un orden cronológico. Algunas de sus características son: gran tamaño, alta dimensionalidad y actualización continua. Las series temporales han adquirido una gran importancia, ya que se utilizan en muchos ámbitos, como los datos diarios de temperatura, los datos semanales de ventas, las mediciones de los sensores de los motores u otras máquinas, etc.
+
+	Hay una gran variedad de aplicaciones en el ámbito del problema de la detección de anomalías. La detección de fraudes consiste en encontrar movimientos inusuales en aplicaciones comerciales como bancos, compañías telefónicas, tarjetas de crédito, etc~\cite{forough2021ensemble}. La detección de intrusiones se refiere a la detección de actividades anómalas en una red informática~\cite{kilincer2021machine}. Debido a la gran cantidad de flujo de información, puede producirse un elevado número de falsas alarmas. Esos movimientos inusuales están relacionados con intentos de robo de identidad o de una persona. Además, la detección de anomalías puede aplicarse en el mundo de la industria, detectando algunos daños en las estructuras, errores de instrumentación de los sensores de los motores o comportamientos inesperados en los motores de una cadena de montaje~\cite{bayram2021real}.
+	
+	Otras aplicaciones de interés son la detección de anomalías en datos de texto, la detección de anomalías en redes de sensores~\cite{kraljevski2021machine} o el procesamiento de imágenes~\cite{pang2021deep}.
+	
+	\subsection{Evaluación de los problemas de detección de anomalías}
+	
+	Para analizar el rendimiento de un algoritmo de detección de anomalías, se suelen utilizar cuatro métricas, que se representan en la matriz de confusión que se muestra en la Tabla~\ref{tab:confusion-matrix}. Tanto los verdaderos negativos como los verdaderos positivos son los valores más importantes y considerados, representan que el modelo está acertando en la predicción. El problema surge cuando el número de falsos positivos o falsos negativos es elevado. Hay dos medidas principales calculadas a partir de la matriz de confusión, la sensibilidad~\ref{eq:sensibilidad} que indica la capacidad de etiquetar como positivos los verdaderos positivos, y la especificidad~\ref{eq:especifidad} que indica la capacidad de etiquetar como negativos los verdaderos negativos.
+	
+	\begin{equation}
+		\label{eq:sensibilidad}
+		\frac{TP}{TP+FN}
+	\end{equation}
+	
+	\begin{equation}
+		\label{eq:especifidad}
+		\frac{TN}{TN+FP}
+	\end{equation}
+		
+	Sin embargo, existe un equilibrio entre ambas medidas, ya que el aumento de una de ellas implica la disminución de la otra, por lo que encontrar el mejor ajuste posible es una tarea difícil y dependerá del problema a tratar qué medida tendrá prioridad.
+	
+	Existe otro equilibrio entre $TPs$ y la tasa de falsos positivos~\ref{eq:equilibrio}.
+	
+	\begin{equation}
+		\label{eq:equilibrio}
+		FPR = \frac{FP}{FP+TP}
+	\end{equation}
+	
+	El aumento de $TPs$ suele dar lugar a un mayor $FPR$ porque se da más importancia a las observaciones positivas y, por tanto, aunque se etiqueten correctamente más observaciones positivas, las observaciones negativas también se etiquetarán como positivas. Una característica distintiva de los problemas de detección de anomalías es que el número de observaciones normales es mucho mayor que el número de observaciones anómalas, por lo que intentar ajustar el modelo para centrarse en las observaciones anómalas da lugar a un incremento del número de falsos positivos, generando así alarmas innecesarias. Además, es posible que una observación sea etiquetada como positiva cuando no lo es en función de su contexto (dando lugar a un falso positivo), lo que es común cuando se trata de un problema de series temporales \cite{hundman2018detecting, sridhar2014model}. 
+	
+	\begin{table}[htb]
+		\centering
+		\resizebox{\textwidth}{!}{
+			\begin{tabular}{cccc}
+				\multicolumn{2}{c}{\multirow{2}{*}{}} & \multicolumn{2}{c}{Predicción} \\
+				\multicolumn{2}{c}{} & Negativos & Positivos \\ \cline{3-4} 
+				\multirow{2}{*}{Valor Real} & \multicolumn{1}{c|}{Negativos} & \multicolumn{1}{c|}{Verdaderos Negativos (TN)} & \multicolumn{1}{c|}{Falsos Positivos (FP)} \\ \cline{3-4} 
+				& \multicolumn{1}{c|}{Positivos} & \multicolumn{1}{c|}{Falsos Negativos (FN)} & \multicolumn{1}{c|}{Verdaderos Positivos (TP)} \\ \cline{3-4} 
+			\end{tabular}
+		}
+		\caption{Matriz de confusión}
+		\label{tab:confusion-matrix}
+	\end{table}
 	
 	\bibliography{M6_Lopez_Pretel_David}
 	\bibliographystyle{plain}
