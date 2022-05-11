@@ -2,6 +2,9 @@
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{graphicx}
+
 \providecommand{\keywords}[1]{\textbf{\textit{Palabras Clave---}} #1}
 
 \begin{document}
@@ -21,9 +24,18 @@
 	
 	\section{Introduccion}
 	
+	Para hacer un seguimiento de un sistema, se genera un conjunto de datos que refleja el comportamiento de dicho sistema. Cuando el sistema empieza a fallar por alguna razón, empiezan a aparecer anomalías en los datos. Por lo tanto, detectar estas anomalías en los datos permite saber si el sistema se enfrenta a un fallo~\cite{chandola2009anomaly, charuOutlier, erhan202164}. La tarea de encontrar observaciones que difieren mucho del resto de los datos se conoce como detección de anomalías~\cite{chandola2009anomaly}. Las observaciones que comparten este comportamiento inusual suelen denominarse valores atípicos o anomalías. 
+	Hay una gran variedad de dominios en los que la detección de anomalías es útil, como la detección de intrusiones~\cite{kilincer2021machine}, las redes de sensores~\cite{kraljevski2021machine}, la detección de fraudes con tarjetas de crédito~\cite{forough2021ensemble}, la atención sanitaria~\cite{dwivedi2021novel} o las anomalías industriales~\cite{bayram2021real}.
+	Por ejemplo, la detección de un comportamiento anómalo en un motor puede indicar que está próximo a fallar, por lo que detectar las anomalías antes de que se rompa puede reducir en gran medida los costes de reparación. La detección de anomalías es cada vez más importante debido a la relevancia de los beneficios que aporta y a la enorme variedad de dominios en los que puede aplicarse. Dado que las tareas de detección de anomalías suelen consistir en el seguimiento del comportamiento de un sistema a lo largo del tiempo, los datos rara vez son estáticos. El escenario más común es enfrentarse a una componente temporal en los datos.
 	
+	
+	Las series temporales son datos que tienen una componente temporal, es decir, cada observación no es independiente, sino que está relacionada en el tiempo. Las series temporales pueden clasificarse en univariantes, que tienen una sola característica, y multivariantes, que tienen más de una característica. La mayoría de las propuestas de series temporales se centran en las univariantes, por lo que no hay muchas alternativas en los problemas multivariantes. Las series temporales mostrarán valores diferentes en distintos periodos de tiempo sin que ello indique necesariamente una anomalía. Por ejemplo, un motor puede tener una temperatura más alta de lo normal en un instante de tiempo, pero ese sobrecalentamiento puede deberse simplemente a una mayor carga de trabajo y no a un fallo. Aprender el comportamiento de una serie temporal puede servir para analizar datos futuros y así anticiparse a un fallo y prevenir posibles daños~\cite{zhang2003time, piccialli20211}. Dentro de una serie temporal, una anomalía suele estar determinada por varios valores anómalos consecutivos en el tiempo~\cite{carrasco2021440}, lo que supone un gran inconveniente para los problemas tradicionales de detección de anomalías, ya que tratan las anomalías sin tener en cuenta el componente temporal~\cite{tatbul2018precision}.
+	
+	Teniendo en cuenta las características de los problemas de detección de anomalías descritas anteriormente, es conveniente hacer uso de un algoritmo que tenga en cuenta la componente temporal en los problemas de detección de anomalías en series temporales. Al enfrentarse a series temporales multivariantes, el estado del arte actual está poblado por redes neuronales recurrentes como las LSTMs y las GRUs~\cite{bai2018empirical}. Un algoritmo reciente y de buen rendimiento son las redes convolucionales temporales (TCN)~\cite{bai2018empirical, lea2016temporal}.
 	
 	\section{Estado del arte}
+	
+	\subsection{Detección de anomalías}
 	
 	
 	

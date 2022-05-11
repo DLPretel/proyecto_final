@@ -4,3 +4,4 @@ files/*.blg
 files/*.log
 files/*.toc
 files/*.gz
+files/*.out
